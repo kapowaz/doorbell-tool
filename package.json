@@ -19,14 +19,15 @@
     "@types/yargs": "^17.0.33",
     "eslint": "^9.37.0",
     "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.23.1",
-    "prettier": "^3.6.2",
+    "eslint-plugin-promise": "^7.2.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.1"
   },
   "dependencies": {
     "colors": "^1.4.0",
-    "handlebars": "^4.7.8",
+    "prettier": "^3.6.2",
     "yargs": "^18.0.0"
   }
 }

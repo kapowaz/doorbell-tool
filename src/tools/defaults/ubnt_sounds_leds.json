@@ -2,10 +2,10 @@
   "customSounds": [
     {
       "enable": true,
-      "file": "{{ filePath }}",
-      "repeatTimes": {{ repeatTimes }},
+      "file": "somefile.wav",
+      "repeatTimes": 1,
       "soundStateName": "RING_BUTTON_PRESSED",
-      "volume": {{ volume }}
+      "volume": 100
     }
   ],
   "fingerprintSoundsEnabled": 1,

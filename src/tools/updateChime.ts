@@ -1,11 +1,12 @@
 import fs from 'fs';
 import { exec as execChildProcess } from 'child_process';
-import Handlebars from 'handlebars';
 import colors from 'colors';
 import util from 'util';
 import yargs from 'yargs';
+import prettier from 'prettier';
+import type { UBNTSoundConfig } from './types';
 
-const SOUNDS_CONFIG_TEMPLATE = './src/tools/templates/ubnt_sounds_leds.conf.hbs';
+const SOUNDS_CONFIG_DEFAULTS = './src/tools/defaults/ubnt_sounds_leds.json';
 const OUTPUT_PATH = './build';
 const SOUND_FILE_DESTINATION_PATH = '/var/etc/sounds';
 const SOUNDS_CONFIG_FILE_DESTINATION_PATH = '/var/etc/persistent/ubnt_sounds_leds.conf';
@@ -16,6 +17,7 @@ const PROCESS_PATH = '/bin/ubnt_sounds_leds';
  */
 const parser = yargs(process.argv.slice(2))
   .usage('Usage: yarn chime [options]')
+  .version(false)
   .options({
     filename: { type: 'string', demandOption: true },
     repeat: { type: 'number', default: 1 },
@@ -25,7 +27,9 @@ const parser = yargs(process.argv.slice(2))
   });
 
 const exec = util.promisify(execChildProcess);
-const soundsConfigTemplate = Handlebars.compile(fs.readFileSync(SOUNDS_CONFIG_TEMPLATE, 'utf8'));
+const soundsConfigDefaults: UBNTSoundConfig = JSON.parse(
+  fs.readFileSync(SOUNDS_CONFIG_DEFAULTS, 'utf8'),
+);
 
 const updateChime = async () => {
   const argv = await parser.parse();
@@ -35,19 +39,26 @@ const updateChime = async () => {
   const soundFileDestinationPath = `/var/etc/sounds/${soundFileName}`;
 
   if (fs.existsSync(soundFileSourcePath)) {
-    const soundsConfigOutput = soundsConfigTemplate({
-      filePath: soundFileDestinationPath,
-      repeatTimes,
-      volume,
+    const soundsConfigOutput = JSON.stringify({
+      ...soundsConfigDefaults,
+      customSounds: [
+        {
+          ...soundsConfigDefaults.customSounds[0],
+          file: soundFileDestinationPath,
+          repeatTimes,
+          volume,
+        },
+      ],
     });
 
     const outputFileName = `${OUTPUT_PATH}/ubnt_sounds_leds.conf`;
+    const formattedOutput = await prettier.format(soundsConfigOutput, { parser: 'json' });
 
     /**
      * Generate a new sound config file
      */
     try {
-      fs.writeFileSync(outputFileName, soundsConfigOutput, 'utf8');
+      fs.writeFileSync(outputFileName, formattedOutput, 'utf8');
       console.log(
         `${colors.green('✓')} Wrote sounds config file to: ${colors.bold(outputFileName)}`,
       );
@@ -80,6 +91,8 @@ const updateChime = async () => {
            * Restart the /bin/ubnt_sounds_leds process
            */
           try {
+            console.log(`${colors.green('✓')} Restarting ${colors.bold(PROCESS_PATH)} process…`);
+
             exec(
               `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`,
             );

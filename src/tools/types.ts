@@ -1,0 +1,42 @@
+export type UBNTSoundConfig = {
+  customSounds: Array<{
+    enable: boolean;
+    file: string;
+    repeatTimes: number;
+    soundStateName: 'RING_BUTTON_PRESSED';
+    volume: number;
+  }>;
+  fingerprintSoundsEnabled: number;
+  forceDetectionStatusLightEnabled: number;
+  glow: {
+    activeAt: 'night';
+    brightness: number;
+    fadeOffMs: number;
+    fadeOnMs: number;
+    mode: 'personInFrontActivated';
+    onMs: number;
+  };
+  lcmAutoOffStartMinute: number;
+  lcmAutoOffStopMinute: number;
+  lcmBrightness: number;
+  ledAnimColorBg: 'black';
+  ledAnimColorFg: 'blue';
+  ledAnimDensity: number;
+  ledAnimOnDurationMs: number;
+  ledBreathingPeriodMs: number;
+  ledFaceAlwaysOnWhenManaged: number;
+  ledFaceEnabled: number;
+  nfcSoundsEnabled: number;
+  personDetectionSource: 'all';
+  previousLedFaceEnabled: number;
+  ringVolume: number;
+  scanningFcdDisabled: number;
+  speakerEnabled: number;
+  speakerVolume: number;
+  systemSoundsEnabled: number;
+  userLedBlinkPeriodMs: number;
+  userLedColorBg: 'black';
+  userLedColorFg: 'blue';
+  userLedOnNoff: number;
+  welcomeType: 'image' | 'text';
+};
