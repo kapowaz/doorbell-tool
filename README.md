@@ -17,11 +17,21 @@ GIF.
 
 ## Setup
 
-1. Run `yarn` to install all dependencies
-2. Set environment variables for `$G4_DOORBELL_SSH_PASSWORD` and
+1. Enable SSH access to your doorbell device by _first_ enabling SSH access to
+   whichever device is running UniFi Protect (e.g. your UDM Pro or CloudKey+),
+   via the UniFi Control Plane; you’ll be prompted to set a password, which you
+   can then use with the `root` user to SSH into that device.
+2. Once connected via SSH (dependent on whether it exists or not) either edit or
+   create the file `/etc/unifi-protect/config.json` and add a key/value pair of
+   `"enableSsh": true` to the root object.
+3. Run `systemctl restart unifi-protect` to restart UniFi Protect
+4. From the UniFi Protect settings for the doorbell device, find the ‘recovery
+   key’ from its settings: this is also the SSH password for this device.
+5. Set environment variables for `$G4_DOORBELL_SSH_PASSWORD` and
    `$G4_DOORBELL_HOSTNAME` with the recovery key and your doorbell’s IP address
    respectively. You can get the recovery key from the UniFi Protect settings for
    your device.
+6. `cd` into this repository and run `yarn` to install all dependencies
 
 ## Usage
 
