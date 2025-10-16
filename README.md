@@ -23,4 +23,18 @@ GIF.
    respectively. You can get the recovery key from the UniFi Protect settings for
    your device.
 
+## Usage
+
+_To update the chime played through your doorbell when somebody pushes the
+button, run:_
+
+```
+$ yarn chime --filename=SomeAudioFile.wav
+```
+
+You can also supply arguments for `--volume` and `--repeat` to change the volume
+(!) and how many times the chime should play after the buzzer is pressed. Note:
+this is not the same as the sound played by e.g. a connected PoE Chime, if you
+have one; at the point I’m writing this, that can only be set using the UniFi
+Protect app from the preinstalled list of chimes.
 [sshpass]: https://sshpass.com
