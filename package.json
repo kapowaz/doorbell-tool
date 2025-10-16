@@ -1,0 +1,12 @@
+{
+  "name": "unifi-doorbell-tool",
+  "version": "0.0.1-alpha",
+  "license": "MIT",
+  "description": "A set of scripts for customising your UniFi Doorbell G4 Pro",
+  "repository": "github:kapowaz/doorbell-tool",
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.22.0"
+  },
+  "type": "module",
+}
