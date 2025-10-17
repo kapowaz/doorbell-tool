@@ -52,3 +52,33 @@ You can also supply arguments for `--volume` and `--repeat` to change the volume
 this is not the same as the sound played by e.g. a connected PoE Chime, if you
 have one; at the point I’m writing this, that can only be set using the UniFi
 Protect app from the preinstalled list of chimes.
+
+_To update the animations displayed on the doorbell screen for specific key
+events, run:_
+
+```
+$ yarn animation --screen SCREEN_NAME --image <image> --framerate 20
+```
+
+In this case, `SCREEN_NAME` is the name of one of the predefined screens
+displayed on the doorbell for specific events. The full list can be found in
+`types.ts`, but the main ones you’ll probably want to set are `WELCOME` and
+`WAITING_FOR_RESPONSE` which are displayed when somebody walks up to the
+doorbell, and when they push the ringer. respectively.
+
+The tool can accept a variety of different ways to create an animation.
+Internally the doorbell uses a ‘slideshow’ format where each frame is laid out
+horizontally across a single PNG image, and animates this by showing a different
+slice of the image according to the animation duration. The tool can accept an
+image created in this format if you’d prefer, but you can also provide it a GIF
+image or a folder containing an image sequence (i.e. sequentially numbered
+images) in PNG or JPEG format. Just put your images into the `src/animations/`
+directory, as the path accepted by the script is relative to this location.
+
+If you want to customise multiple screens (or you just want to test the tool
+without changing anything on your doorbell), you can run the script with the
+`--dry_run` flag enabled, and it will generate the output images and config
+files in the `build/` directory; subsequent runs of the script will use this
+file as the starting point, overwriting the default config for any screens you
+update. If you want to start out fresh again, just delete anything in the
+`build/` directory.
