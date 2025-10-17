@@ -168,295 +168,302 @@ const updateAnimation = async () => {
   let animationFrames = frames;
   let imageDimensions = { width: 0, height: 0 };
 
-  if (isScreenName(screenName)) {
-    if (fs.existsSync(animationSourcePath)) {
-      try {
-        logSuccess(`Importing animation from source ${colors.bold(animationSourcePath)}…`);
+  try {
+    if (!isScreenName(screenName)) {
+      throw new Error(
+        `The provided argument for screen ${colors.bold(screenName)} is not a valid screen name`,
+      );
+    }
 
-        const isDirectory = fs.lstatSync(animationSourcePath).isDirectory();
-        const isGIF = path.extname(imageName) === '.gif';
-        const isStaticImage = hasAcceptedFileExtension(animationSourcePath) && !slideshow;
+    if (!fs.existsSync(animationSourcePath)) {
+      throw new Error(
+        `The specified image file ${colors.bold(animationSourcePath)} does not exist`,
+      );
+    }
 
-        switch (true) {
+    logSuccess(`Importing animation from source ${colors.bold(animationSourcePath)}…`);
+
+    const isDirectory = fs.lstatSync(animationSourcePath).isDirectory();
+    const isGIF = path.extname(imageName) === '.gif';
+    const isStaticImage = hasAcceptedFileExtension(animationSourcePath) && !slideshow;
+
+    switch (true) {
+      /**
+       * A directory containing an image sequence
+       */
+      case isDirectory:
+        {
+          const contents = fs.readdirSync(animationSourcePath, { withFileTypes: true });
+          outputImageName = `${imageName}.png`;
+          outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
+
           /**
-           * A directory containing an image sequence
+           * Filter out:
+           *
+           * - Things that aren’t files
+           * - Files that don’t have an accepted file extension (e.g. .txt files)
+           * - Image files that don’t have an acceptable image format (e.g. calling a GIF a .png)
            */
-          case isDirectory:
-            {
-              const contents = fs.readdirSync(animationSourcePath, { withFileTypes: true });
-              outputImageName = `${imageName}.png`;
-              outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
+          const arrValidImages = await Promise.all(
+            contents.map(async (file) => {
+              const imagePath = `${file.parentPath}/${file.name}`;
 
-              /**
-               * Filter out:
-               *
-               * - Things that aren’t files
-               * - Files that don’t have an accepted file extension (e.g. .txt files)
-               * - Image files that don’t have an acceptable image format (e.g. calling a GIF a .png)
-               */
-              const arrValidImages = await Promise.all(
-                contents.map(async (file) => {
-                  const imagePath = `${file.parentPath}/${file.name}`;
-
-                  // not a file, filter it out
-                  if (!file.isFile()) {
-                    logWarning(`Skipping ${colors.bold(imagePath)} as it isn’t a file`);
-                    return false;
-                  }
-
-                  // not an accepted file extension
-                  if (!hasAcceptedFileExtension(imagePath)) {
-                    logWarning(
-                      `Skipping ${colors.bold(imagePath)} as it doesn’t have an acceptable file extension`,
-                    );
-                    return false;
-                  }
-
-                  // an unacceptable image format masquerading as an accepted file extension
-                  const { format, width, height } = await sharp(imagePath).metadata();
-                  if (!ACCEPTABLE_FRAME_IMAGE_FORMATS.includes(format)) {
-                    logWarning(
-                      `Skipping ${colors.bold(imagePath)} as its image format (${format}) isn’t acceptable`,
-                    );
-                    return false;
-                  }
-
-                  // whilst iterating, set the image dimensions based on the first found image
-                  if (imageDimensions.width === 0 || imageDimensions.height === 0) {
-                    imageDimensions = {
-                      width,
-                      height,
-                    };
-                  } else if (width !== imageDimensions.width || height !== imageDimensions.height) {
-                    // reject any images that have dimensions different to the first dimensions encountered
-                    logWarning(
-                      `Skipping ${colors.bold(imagePath)} as its image dimensions (${width}×${height}) are incompatible`,
-                    );
-                    return false;
-                  }
-
-                  return true;
-                }),
-              );
-
-              const filteredImages = contents.filter((_, index) => arrValidImages[index]);
-              const hasImages = Boolean(filteredImages.length);
-
-              if (!hasImages) {
-                throw new Error(
-                  `No suitable image(s) for an image sequence found in the directory path`,
-                );
+              // not a file, filter it out
+              if (!file.isFile()) {
+                logWarning(`Skipping ${colors.bold(imagePath)} as it isn’t a file`);
+                return false;
               }
 
-              logSuccess(
-                `Found image sequence with ${colors.bold(`${filteredImages.length} ${imageDimensions.width}×${imageDimensions.height}`)} images`,
-              );
+              // not an accepted file extension
+              if (!hasAcceptedFileExtension(imagePath)) {
+                logWarning(
+                  `Skipping ${colors.bold(imagePath)} as it doesn’t have an acceptable file extension`,
+                );
+                return false;
+              }
 
-              // turn the filtered images into an array of sharp OverlayOptions
-              const images: OverlayOptions[] = filteredImages.map((file, index) => {
+              // an unacceptable image format masquerading as an accepted file extension
+              const { format, width, height } = await sharp(imagePath).metadata();
+              if (!ACCEPTABLE_FRAME_IMAGE_FORMATS.includes(format)) {
+                logWarning(
+                  `Skipping ${colors.bold(imagePath)} as its image format (${format}) isn’t acceptable`,
+                );
+                return false;
+              }
+
+              // whilst iterating, set the image dimensions based on the first found image
+              if (imageDimensions.width === 0 || imageDimensions.height === 0) {
+                imageDimensions = {
+                  width,
+                  height,
+                };
+              } else if (width !== imageDimensions.width || height !== imageDimensions.height) {
+                // reject any images that have dimensions different to the first dimensions encountered
+                logWarning(
+                  `Skipping ${colors.bold(imagePath)} as its image dimensions (${width}×${height}) are incompatible`,
+                );
+                return false;
+              }
+
+              return true;
+            }),
+          );
+
+          const filteredImages = contents.filter((_, index) => arrValidImages[index]);
+          const hasImages = Boolean(filteredImages.length);
+
+          if (!hasImages) {
+            throw new Error(
+              `No suitable image(s) for an image sequence found in the directory path`,
+            );
+          }
+
+          logSuccess(
+            `Found image sequence with ${colors.bold(`${filteredImages.length} ${imageDimensions.width}×${imageDimensions.height}`)} images`,
+          );
+
+          // turn the filtered images into an array of sharp OverlayOptions
+          const images: OverlayOptions[] = filteredImages.map((file, index) => {
+            return {
+              input: `${file.parentPath}/${file.name}`,
+              left: index * imageDimensions.width,
+              top: 0,
+            };
+          });
+
+          // composite all the images into a single image, and export as a PNG
+          await outputSlideshowImage({
+            images,
+            outputImage: outputImagePath,
+            ...imageDimensions,
+          });
+          logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
+        }
+        break;
+
+      /**
+       * An animated GIF
+       */
+      case isGIF:
+        {
+          try {
+            const { pages, width, height } = await sharp(animationSourcePath).metadata();
+            outputImageName = `${path.basename(imageName, '.gif')}.png`;
+            outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
+            animationFrames = pages;
+            imageDimensions = { width, height };
+
+            const images: OverlayOptions[] = await Promise.all(
+              [...Array(pages)].map(async (_, index) => {
+                const inputBuffer = await sharp(animationSourcePath, {
+                  page: index,
+                }).toBuffer();
+
                 return {
-                  input: `${file.parentPath}/${file.name}`,
-                  left: index * imageDimensions.width,
+                  input: inputBuffer,
+                  left: index * width,
                   top: 0,
                 };
-              });
+              }),
+            );
 
-              // composite all the images into a single image, and export as a PNG
-              await outputSlideshowImage({
-                images,
-                outputImage: outputImagePath,
-                ...imageDimensions,
-              });
-              logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
-            }
-            break;
+            await outputSlideshowImage({
+              images,
+              outputImage: outputImagePath,
+              width,
+              height,
+            });
+            logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
+          } catch (error) {
+            logError(`An error occurred attempting to parse GIF image: ${error}`);
+          }
+        }
+        break;
 
-          /**
-           * An animated GIF
-           */
-          case isGIF:
-            {
-              try {
-                const { pages, width, height } = await sharp(animationSourcePath).metadata();
-                outputImageName = `${path.basename(imageName, '.gif')}.png`;
-                outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
-                animationFrames = pages;
-                imageDimensions = { width, height };
-
-                const images: OverlayOptions[] = await Promise.all(
-                  [...Array(pages)].map(async (_, index) => {
-                    const inputBuffer = await sharp(animationSourcePath, {
-                      page: index,
-                    }).toBuffer();
-
-                    return {
-                      input: inputBuffer,
-                      left: index * width,
-                      top: 0,
-                    };
-                  }),
-                );
-
-                await outputSlideshowImage({ images, outputImage: outputImagePath, width, height });
-                logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
-              } catch (error) {
-                logError(`An error occurred attempting to parse GIF image: ${error}`);
-              }
-            }
-            break;
-
-          /**
-           * A single static image
-           */
-          case isStaticImage:
-            {
-              logSuccess(`Creating single static image`);
-              exec(`cp ${animationSourcePath} ${outputImagePath}`);
-              const { width, height } = await sharp(animationSourcePath).metadata();
-              imageDimensions = {
-                width,
-                height,
-              };
-            }
-
-            break;
-
-          /**
-           * A single image slideshow requires a frames argument. We _could_ just
-           * fall back to a multiple of 240, but this doesn’t work for smaller
-           * slideshow image dimensions
-           */
-          case hasAcceptedFileExtension(animationSourcePath):
-            {
-              if (!Boolean(frames)) {
-                throw new Error(
-                  `if you’re creating a slideshow from a single image, you must provide a frames argument`,
-                );
-              }
-
-              logSuccess(`Creating single frame animation`);
-              exec(`cp ${animationSourcePath} ${outputImagePath}`);
-
-              const { width, height } = await sharp(animationSourcePath).metadata();
-
-              imageDimensions = {
-                width: width / (frames as number),
-                height,
-              };
-            }
-
-            break;
-          default:
-            throw new Error(`Not sure how we got here exactly?`);
+      /**
+       * A single static image
+       */
+      case isStaticImage:
+        {
+          logSuccess(`Creating single static image`);
+          exec(`cp ${animationSourcePath} ${outputImagePath}`);
+          const { width, height } = await sharp(animationSourcePath).metadata();
+          imageDimensions = {
+            width,
+            height,
+          };
         }
 
-        const animationDuration = framerate
-          ? Math.round((1 / framerate) * (animationFrames as number) * 1000)
-          : duration;
+        break;
 
-        const screenFrames: ScreenFrame[] = [
-          {
-            images: [
-              {
-                x,
-                y,
-                w: 0, // confusingly, this always appears to be set to 0, rather than the actual width of a frame
-                h: imageDimensions.height,
-                // this shouldn’t be necessary, but for some reason this doesn’t work:
-                // https://github.com/yargs/yargs/blob/main/docs/typescript.md#more-specific-typing-for-choices
-                horizontal: horizontal as 'center' | 'left' | 'right',
-                vertical: vertical as 'middle' | 'top' | 'bottom',
-                file: outputImageName,
-                animation: 'slideshow',
-                duration: animationDuration,
-                count: frames,
-                animation_loop: loop,
-              },
-            ],
-          },
-        ];
+      /**
+       * A single image slideshow requires a frames argument. We _could_ just
+       * fall back to a multiple of 240, but this doesn’t work for smaller
+       * slideshow image dimensions
+       */
+      case hasAcceptedFileExtension(animationSourcePath):
+        {
+          if (!Boolean(frames)) {
+            throw new Error(
+              `if you’re creating a slideshow from a single image, you must provide a frames argument`,
+            );
+          }
 
-        const screens = animationsConfig.screens.filter(
-          (defaultScreen) => defaultScreen.name !== screenName,
-        );
+          logSuccess(`Creating single frame animation`);
+          exec(`cp ${animationSourcePath} ${outputImagePath}`);
 
-        const animationsConfigOutput = JSON.stringify({
-          ...animationsConfig,
-          screens: [
-            ...screens,
-            {
-              name: screenName,
-              frames: screenFrames,
-            },
-          ],
-        });
+          const { width, height } = await sharp(animationSourcePath).metadata();
 
-        const formattedOutput = await prettier.format(animationsConfigOutput, { parser: 'json' });
+          imageDimensions = {
+            width: width / (frames as number),
+            height,
+          };
+        }
 
-        /**
-         * Generate a new animations config file
-         */
-        fs.writeFileSync(OUTPUT_CONFIG_PATH, formattedOutput, 'utf8');
-        logSuccess(`Wrote animations config file to: ${colors.bold(OUTPUT_CONFIG_PATH)}`);
-
-        if (dry_run) throw new Error('Bailing out early to avoid sending new config to device…');
-
-        /**
-         * Copy animations config file to device
-         */
-        logSuccess(`Copying animations config file to ${colors.bold(CONFIG_DESTINATION_PATH)}…`);
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${OUTPUT_CONFIG_PATH} ubnt@$G4_DOORBELL_HOSTNAME:${CONFIG_DESTINATION_PATH}`,
-        );
-
-        /**
-         * Copy custom slideshow image file to device
-         */
-        logSuccess(
-          `Copying custom slideshow image file to ${colors.bold(SLIDESHOW_FILE_DESTINATION_PATH)}…`,
-        );
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputImagePath} ubnt@$G4_DOORBELL_HOSTNAME:${SLIDESHOW_FILE_DESTINATION_PATH}`,
-        );
-
-        /**
-         * Mount the custom image in the target directory
-         */
-        logSuccess(`Mounting custom slideshow image file in ${colors.bold(IMAGE_MOUNT_PATH)}…`);
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SLIDESHOW_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${outputImageName}'`,
-        );
-
-        /**
-         * Mount the animations config file in the target directory
-         */
-        logSuccess(`Mounting animations config file at ${colors.bold(CONFIG_MOUNT_PATH)}…`);
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${CONFIG_DESTINATION_PATH} ${CONFIG_MOUNT_PATH}'`,
-        );
-
-        /**
-         * Restart the service
-         */
-        logSuccess(`Restarting ${colors.bold(PROCESS_PATH)} process…`);
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`,
-        );
-      } catch (error) {
-        logError(`${error}`);
-      }
-    } else {
-      logError(`The specified image file ${colors.bold(animationSourcePath)} does not exist`);
+        break;
+      default:
+        throw new Error(`Not sure how we got here exactly?`);
     }
-  } else {
-    logError(
-      `The provided argument for screen ${colors.bold(screenName)} is not a valid screen name`,
+
+    const animationDuration = framerate
+      ? Math.round((1 / framerate) * (animationFrames as number) * 1000)
+      : duration;
+
+    const screenFrames: ScreenFrame[] = [
+      {
+        images: [
+          {
+            x,
+            y,
+            w: 0, // confusingly, this always appears to be set to 0, rather than the actual width of a frame
+            h: imageDimensions.height,
+            // this shouldn’t be necessary, but for some reason this doesn’t work:
+            // https://github.com/yargs/yargs/blob/main/docs/typescript.md#more-specific-typing-for-choices
+            horizontal: horizontal as 'center' | 'left' | 'right',
+            vertical: vertical as 'middle' | 'top' | 'bottom',
+            file: outputImageName,
+            animation: 'slideshow',
+            duration: animationDuration,
+            count: frames,
+            animation_loop: loop,
+          },
+        ],
+      },
+    ];
+
+    const screens = animationsConfig.screens.filter(
+      (defaultScreen) => defaultScreen.name !== screenName,
     );
+
+    const animationsConfigOutput = JSON.stringify({
+      ...animationsConfig,
+      screens: [
+        ...screens,
+        {
+          name: screenName,
+          frames: screenFrames,
+        },
+      ],
+    });
+
+    const formattedOutput = await prettier.format(animationsConfigOutput, { parser: 'json' });
+
+    /**
+     * Generate a new animations config file
+     */
+    fs.writeFileSync(OUTPUT_CONFIG_PATH, formattedOutput, 'utf8');
+    logSuccess(`Wrote animations config file to: ${colors.bold(OUTPUT_CONFIG_PATH)}`);
+
+    if (dry_run) throw new Error('Bailing out early to avoid sending new config to device…');
+
+    /**
+     * Copy animations config file to device
+     */
+    logSuccess(`Copying animations config file to ${colors.bold(CONFIG_DESTINATION_PATH)}…`);
+
+    exec(
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${OUTPUT_CONFIG_PATH} ubnt@$G4_DOORBELL_HOSTNAME:${CONFIG_DESTINATION_PATH}`,
+    );
+
+    /**
+     * Copy custom slideshow image file to device
+     */
+    logSuccess(
+      `Copying custom slideshow image file to ${colors.bold(SLIDESHOW_FILE_DESTINATION_PATH)}…`,
+    );
+
+    exec(
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputImagePath} ubnt@$G4_DOORBELL_HOSTNAME:${SLIDESHOW_FILE_DESTINATION_PATH}`,
+    );
+
+    /**
+     * Mount the custom image in the target directory
+     */
+    logSuccess(`Mounting custom slideshow image file in ${colors.bold(IMAGE_MOUNT_PATH)}…`);
+
+    exec(
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SLIDESHOW_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${outputImageName}'`,
+    );
+
+    /**
+     * Mount the animations config file in the target directory
+     */
+    logSuccess(`Mounting animations config file at ${colors.bold(CONFIG_MOUNT_PATH)}…`);
+
+    exec(
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${CONFIG_DESTINATION_PATH} ${CONFIG_MOUNT_PATH}'`,
+    );
+
+    /**
+     * Restart the service
+     */
+    logSuccess(`Restarting ${colors.bold(PROCESS_PATH)} process…`);
+
+    exec(
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`,
+    );
+  } catch (error) {
+    logError(`${error}`);
   }
 };
 
