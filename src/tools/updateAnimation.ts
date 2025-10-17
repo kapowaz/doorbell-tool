@@ -271,6 +271,8 @@ const updateAnimation = async () => {
             };
           });
 
+          animationFrames = filteredImages.length;
+
           // composite all the images into a single image, and export as a PNG
           await outputSlideshowImage({
             images,
