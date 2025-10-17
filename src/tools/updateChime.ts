@@ -36,7 +36,7 @@ const updateChime = async () => {
 
   const { filename: soundFileName, repeat: repeatTimes, volume } = argv;
   const soundFileSourcePath = `src/chimes/${soundFileName}`;
-  const soundFileDestinationPath = `/var/etc/sounds/${soundFileName}`;
+  const soundFileDestinationPath = `../sounds/${soundFileName}`;
 
   if (fs.existsSync(soundFileSourcePath)) {
     const soundsConfigOutput = JSON.stringify({
