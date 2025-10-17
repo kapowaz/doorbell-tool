@@ -13,7 +13,7 @@ GIF.
 
 - Node.js
 - Yarn
-- [sshpass][sshpass]
+- [sshpass](https://sshpass.com)
 
 ## Setup
 
@@ -39,12 +39,16 @@ _To update the chime played through your doorbell when somebody pushes the
 button, run:_
 
 ```
-$ yarn chime --filename=SomeAudioFile.wav
+$ yarn chime --filename SomeAudioFile.wav
 ```
+
+The path to the filename is relative to the `src/chimes/` directory within this
+repository, so put your audio file within that directory before running the
+command. Both `.wav` and `.ogg` audio formats are supported (I’ve not test
+anything else, but it’s possible `.mp3` is supported too).
 
 You can also supply arguments for `--volume` and `--repeat` to change the volume
 (!) and how many times the chime should play after the buzzer is pressed. Note:
 this is not the same as the sound played by e.g. a connected PoE Chime, if you
 have one; at the point I’m writing this, that can only be set using the UniFi
 Protect app from the preinstalled list of chimes.
-[sshpass]: https://sshpass.com
