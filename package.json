@@ -10,7 +10,8 @@
   },
   "type": "module",
   "scripts": {
-    "chime": "node --experimental-strip-types src/tools/updateChime.ts"
+    "chime": "node --experimental-strip-types src/tools/updateChime.ts",
+    "animation": "node --experimental-strip-types src/tools/updateAnimation.ts"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
