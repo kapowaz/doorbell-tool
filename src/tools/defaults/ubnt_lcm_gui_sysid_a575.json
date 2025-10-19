@@ -1,0 +1,1962 @@
+{
+  "backLightPaths": ["/sys/class/leds/B", "/sys/class/leds/W"],
+  "blankPaths": [
+    "/sys/devices/platform/e0000000.ahb/e0020000.spi/spi_master/spi0/spi0.1/graphics/fb2"
+  ],
+  "imgPath": "/usr/etc/gui/img_sysid_a574",
+  "isColorBuffer": true,
+  "screens": [
+    {
+      "name": "INITIALIZING",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "font_style": "Black",
+              "strs": ["Starting Up"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 170,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Protect_Glow_Loop_Anim_19.png",
+              "animation": "slideshow",
+              "duration": 826,
+              "count": 19
+            },
+            {
+              "x": 0,
+              "y": 200,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Progress_Bar.png",
+              "animation": "progressbar",
+              "duration": 18000,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "INSUFFICIENT_POWER",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 28,
+              "letter_spacing": 0,
+              "strs": ["Insufficient Power"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 170,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Power.png",
+              "animation": "breathing",
+              "duration": 2000,
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OFFLINE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Offline"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 188,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Offline.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NO_WIFI_IN_RANGE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Not In Range"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "No_WiFi.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CONNECTING_WIFI",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Connecting"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "AP_Glow_Loop_Anim_59.png",
+              "animation": "slideshow",
+              "duration": 2565,
+              "count": 59
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "POOR_WIFI_SIGNAL",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Weak Signal"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Poor_WiFi_Anim_2.png",
+              "animation": "slideshow",
+              "duration": 2000,
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UPDATING_FIRMWARE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Updating"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 20,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Rotating_Cogwheel_Anim_15.png",
+              "animation": "slideshow",
+              "duration": 652,
+              "count": 15
+            },
+            {
+              "x": 0,
+              "y": 200,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Progress_Bar.png",
+              "animation": "progressbar",
+              "duration": 15000,
+              "animation_loop": false
+            }
+          ],
+          "frame_config": {
+            "duration": 15000
+          }
+        },
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Restarting"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 170,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Timelapse.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UPDATING_MCU",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Updating"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 20,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Rotating_Cogwheel_Anim_15.png",
+              "animation": "slideshow",
+              "duration": 652,
+              "count": 15
+            },
+            {
+              "x": 0,
+              "y": 200,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Progress_Bar.png",
+              "animation": "progressbar",
+              "duration": 27000,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SETUP_COMPLETE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["Setup Complete"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Complete.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DOOR_UNLOCKED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Unlocked"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Door_Unlocked_Anim_29.png",
+              "animation": "slideshow",
+              "duration": 1261,
+              "count": 29,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DOOR_LOCKED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Locked"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Door_Locked_Anim_21.png",
+              "animation": "slideshow",
+              "duration": 913,
+              "count": 21,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BE_RIGHT_THERE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 100,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["Be Right There"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 45,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Be_Right_There.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DO_NOT_DISTURB",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 100,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["Do Not Disturb"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 45,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Do_Not_Disturb.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LEAVE_PACKAGE_AT_DOOR",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 100,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "size": 30,
+              "strs": ["Leave Package", "At Door"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 30,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Leave_Package_At_Door.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WAITING_FOR_RESPONSE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Ringing"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Ringing_Anim_48.png",
+              "animation": "slideshow",
+              "duration": 2087,
+              "count": 48
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TALKING",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Talk"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Talking_Anim_48.png",
+              "animation": "slideshow",
+              "duration": 2087,
+              "count": 48
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UNCONFIGURED",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Unconfigured.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RESET_HOLD",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "animation": "slideshow",
+              "duration": 5000,
+              "animation_loop": false,
+              "strs": ["Hold for 5s", "4s", "3s", "2s", "1s"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Reset_Pressed.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FACTORY_RESETTING",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Resetting"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 25,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Rotating_Cogwheel_Anim_15.png",
+              "animation": "slideshow",
+              "duration": 652,
+              "count": 15
+            },
+            {
+              "x": 0,
+              "y": 200,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Progress_Bar.png",
+              "animation": "progressbar",
+              "duration": 5000,
+              "animation_loop": false
+            }
+          ],
+          "frame_config": {
+            "duration": 5000
+          }
+        },
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Restarting"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 170,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Timelapse.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SHUTTING_DOWN_COUNT",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 150,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 24,
+              "strs": ["Shutting Down"]
+            },
+            {
+              "x": 0,
+              "y": 185,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "font_style": "Black",
+              "animation": "slideshow",
+              "duration": 5000,
+              "animation_loop": false,
+              "strs": ["5s", "4s", "3s", "2s", "1s"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 160,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Power_Anim_2.png",
+              "animation": "breathing",
+              "duration": 2000,
+              "count": 2
+            }
+          ],
+          "frame_config": {
+            "duration": 5000
+          }
+        },
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 150,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 24,
+              "strs": ["Shutting Down"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 160,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Power_Anim_2.png",
+              "animation": "breathing",
+              "duration": 2000,
+              "count": 2,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RESTARTING",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 160,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Restarting"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 170,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Timelapse.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SHUTTING_DOWN",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 150,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 24,
+              "strs": ["Shutting Down"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 160,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Power_Anim_2.png",
+              "animation": "breathing",
+              "duration": 2000,
+              "count": 2,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WELCOME",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 240,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Welcome_Anim_60.png",
+              "animation": "slideshow",
+              "duration": 2609,
+              "count": 60,
+              "animation_loop": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WELCOME_TEXT",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 100,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "size": 30,
+              "strs": ["Welcome"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 45,
+              "w": 0,
+              "h": 100,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Welcome.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MESSAGE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 10,
+              "y": 20,
+              "w": 220,
+              "h": 200,
+              "horizontal": "center",
+              "vertical": "middle",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["dynamic_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINGERPRINT_SCAN_FINGER",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 40,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Scan_Finger_Top_Part.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 210,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Scan_Finger_Buttom_Part.png",
+              "animation": "static"
+            }
+          ],
+          "texts": [
+            {
+              "x": 10,
+              "y": 163,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["dynamic_fingerprint_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINGERPRINT_SCANNING_FINGER",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 32,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Scanning_Fingerprint_Anim_10.png",
+              "animation": "slideshowProgress",
+              "count": 10,
+              "progressSplitters": {
+                "values": [8.0, 16.0, 25.0, 33.0, 41.0, 58.0, 75.0, 91.0, 100.0]
+              }
+            }
+          ],
+          "texts": [
+            {
+              "x": 10,
+              "y": 185,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["dynamic_fingerprint_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINGERPRINT_RECOGNIZED",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 32,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Fingerprint_OK.png",
+              "animation": "static"
+            }
+          ],
+          "texts": [
+            {
+              "x": 0,
+              "y": 185,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["dynamic_fingerprint_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINGERPRINT_ERROR_BIG",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 32,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Fingerprint_Error_Big.png",
+              "animation": "static"
+            }
+          ],
+          "texts": [
+            {
+              "x": 0,
+              "y": 185,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["dynamic_fingerprint_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FINGERPRINT_ERROR_MIDDLE",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 30,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Fingerprint_Error_Middle.png",
+              "animation": "static"
+            }
+          ],
+          "texts": [
+            {
+              "x": 0,
+              "y": 165,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 24,
+              "strs": ["dynamic_fingerprint_message"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PAIRING",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 170,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Pairing"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 190,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Pairing_Anim_46.png",
+              "animation": "slideshow",
+              "duration": 2000,
+              "count": 46
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PAIR_COMPLETE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "letter_spacing": 0,
+              "strs": ["Pair Complete"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Complete.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PAIR_FAILED",
+      "frames": [
+        {
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Pair_Failed.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WIFI_RECONFIGURE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 175,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 30,
+              "strs": ["Disconnected"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 185,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "No_WiFi.png",
+              "animation": "static"
+            }
+          ],
+          "frame_config": {
+            "duration": 5800,
+            "animation": "slideleft",
+            "animation_duration": 800
+          }
+        },
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 145,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 22,
+              "strs": ["Go to UniFi Protect"]
+            },
+            {
+              "x": 0,
+              "y": 182,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 22,
+              "strs": ["App to reconnect"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 148,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Protect_Logo.png",
+              "animation": "static"
+            },
+            {
+              "x": 183,
+              "y": 0,
+              "w": 57,
+              "h": 57,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Bluetooth_Logo.png",
+              "animation": "static"
+            }
+          ],
+          "frame_config": {
+            "duration": 5800,
+            "animation": "slideleft",
+            "animation_duration": 800
+          }
+        }
+      ]
+    },
+    {
+      "name": "NFC_PLACE_CARD",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 10,
+              "y": 78,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "line_spacing": 9,
+              "strs": ["Register the card by holding it above the screen for 5s."]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_OK.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 21,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Arrow_Up.png",
+              "animation": "static",
+              "opacity": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_CONFIRM_CARD",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 186,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["dynamic_nfc_message"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_OK.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 49,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Registered_Card.png",
+              "animation": "static",
+              "show_if": "message_present"
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_Registered_Card.png",
+              "animation": "static",
+              "show_if": "message_absent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_CONFIRM_POCKET",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 186,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["dynamic_nfc_message"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_OK.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 30,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Registered_Pocket.png",
+              "animation": "static",
+              "show_if": "message_present"
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_Registered_Pocket.png",
+              "animation": "static",
+              "show_if": "message_absent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_REGISTER_ERROR",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 10,
+              "y": 78,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "line_spacing": 12,
+              "strs": ["Hold the card above the screen for at least 5s."]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 21,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Arrow_Up.png",
+              "animation": "static",
+              "opacity": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_REGISTERED_OTHER_SITE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 10,
+              "y": 72,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "line_spacing": 10,
+              "strs": ["Card Registered at Another Site."]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_CARD_NOT_SUPPORTED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 17,
+              "y": 36,
+              "w": 206,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "line_spacing": 10,
+              "strs": ["Card type is not supported. Please use a UA card."]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_SCAN_CARD_AGAIN",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 174,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["Scan Card Again"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 49,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Invalid_Card.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_ACCESS_GRANTED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 174,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["dynamic_nfc_message"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_OK.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Guest_OK.png",
+              "animation": "static",
+              "show_if": "message_present"
+            },
+            {
+              "x": 0,
+              "y": 28,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Guest_OK.png",
+              "animation": "static",
+              "show_if": "message_absent"
+            },
+            {
+              "x": 66,
+              "y": 38,
+              "w": 108,
+              "h": 108,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "dynamic_nfc_image",
+              "mask_file": "NFC_Avatar_Mask.png",
+              "animation": "static",
+              "fit": "crop",
+              "show_if": "message_present"
+            },
+            {
+              "x": 66,
+              "y": 66,
+              "w": 108,
+              "h": 108,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "dynamic_nfc_image",
+              "mask_file": "NFC_Avatar_Mask.png",
+              "animation": "static",
+              "fit": "crop",
+              "show_if": "message_absent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_ACCESS_REJECTED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 174,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "show_if": "message_present",
+              "strs": ["No Permission"]
+            },
+            {
+              "x": 0,
+              "y": 179,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "show_if": "message_absent",
+              "strs": ["No Permission"]
+            },
+            {
+              "x": 0,
+              "y": 209,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 22,
+              "letter_spacing": 0,
+              "strs": ["dynamic_nfc_message"],
+              "opacity": 44
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Guest_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 67,
+              "y": 38,
+              "w": 108,
+              "h": 108,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "dynamic_nfc_image",
+              "mask_file": "NFC_Avatar_Mask.png",
+              "animation": "static",
+              "fit": "crop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_CARD_REJECTED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 179,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["No Permission"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 49,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Invalid_Card.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_POCKET_REJECTED",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 179,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "strs": ["No Permission"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_Error.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 30,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Invalid_Pocket.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NFC_CONSOLE_OFFLINE",
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 10,
+              "y": 90,
+              "w": 220,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 32,
+              "letter_spacing": 0,
+              "line_spacing": 10,
+              "strs": ["Ring call is not available. Scan your NFC card."]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "NFC_BG_OK.png",
+              "animation": "static"
+            },
+            {
+              "x": 0,
+              "y": 21,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "NFC_Arrow_Up.png",
+              "animation": "static",
+              "opacity": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OPEN_MOBILE_APP",
+      "next_gui_frame_config": {
+        "duration": 11000,
+        "animation": "slideleft",
+        "animation_duration": 800
+      },
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 145,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 27,
+              "strs": ["Open Mobile App for More Info"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 148,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Protect_Logo.png",
+              "animation": "static"
+            },
+            {
+              "x": 183,
+              "y": 0,
+              "w": 57,
+              "h": 57,
+              "horizontal": "center",
+              "vertical": "middle",
+              "file": "Bluetooth_Logo.png",
+              "animation": "static"
+            }
+          ],
+          "frame_config": {
+            "duration": 10000,
+            "animation": "slideleft",
+            "animation_duration": 800
+          }
+        }
+      ],
+      "frames_config": { "animation_loop": false }
+    },
+    {
+      "name": "NO_CONNECTION_KNOCK",
+      "discard_next_gui_frame_config": true,
+      "frames": [
+        {
+          "texts": [
+            {
+              "x": 0,
+              "y": 120,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "size": 28,
+              "strs": ["Doorbell Chime inactive, please knock"]
+            }
+          ],
+          "images": [
+            {
+              "x": 0,
+              "y": 30,
+              "w": 0,
+              "h": 0,
+              "horizontal": "center",
+              "vertical": "top",
+              "file": "Info.png",
+              "animation": "static"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BLANK"
+    }
+  ]
+}

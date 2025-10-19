@@ -5,10 +5,11 @@ import util from 'util';
 import yargs from 'yargs';
 import prettier from 'prettier';
 import type { UBNTSoundConfig } from './types';
+import { logSuccess, logError } from './utils.ts';
 
 const SOUNDS_CONFIG_DEFAULTS = './src/tools/defaults/ubnt_sounds_leds.json';
 const OUTPUT_PATH = './build';
-const SOUND_FILE_DESTINATION_PATH = '/var/etc/sounds';
+const SOUND_FILE_DESTINATION_PATH = '/var/etc/persistent/sounds';
 const SOUNDS_CONFIG_FILE_DESTINATION_PATH = '/var/etc/persistent/ubnt_sounds_leds.conf';
 const PROCESS_PATH = '/bin/ubnt_sounds_leds';
 
@@ -38,84 +39,65 @@ const updateChime = async () => {
   const soundFileSourcePath = `src/chimes/${soundFileName}`;
   const soundFileDestinationPath = `../sounds/${soundFileName}`;
 
-  if (fs.existsSync(soundFileSourcePath)) {
-    const soundsConfigOutput = JSON.stringify({
-      ...soundsConfigDefaults,
-      customSounds: [
-        {
-          ...soundsConfigDefaults.customSounds[0],
-          file: soundFileDestinationPath,
-          repeatTimes,
-          volume,
-        },
-      ],
-    });
+  const soundsConfigOutput = JSON.stringify({
+    ...soundsConfigDefaults,
+    customSounds: [
+      {
+        ...soundsConfigDefaults.customSounds[0],
+        file: soundFileDestinationPath,
+        repeatTimes,
+        volume,
+      },
+    ],
+  });
 
-    const outputFileName = `${OUTPUT_PATH}/ubnt_sounds_leds.conf`;
-    const formattedOutput = await prettier.format(soundsConfigOutput, { parser: 'json' });
+  const outputFileName = `${OUTPUT_PATH}/ubnt_sounds_leds.conf`;
+  const formattedOutput = await prettier.format(soundsConfigOutput, { parser: 'json' });
 
-    /**
-     * Generate a new sound config file
-     */
-    try {
-      fs.writeFileSync(outputFileName, formattedOutput, 'utf8');
-      console.log(
-        `${colors.green('✓')} Wrote sounds config file to: ${colors.bold(outputFileName)}`,
-      );
+  /**
+   * Generate a new sound config file
+   */
 
-      /**
-       * Copy sounds config file to device
-       */
-      try {
-        console.log(
-          `${colors.green('✓')} Copying sounds config file to ${colors.bold(SOUNDS_CONFIG_FILE_DESTINATION_PATH)}…`,
-        );
-
-        exec(
-          `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputFileName} ubnt@$G4_DOORBELL_HOSTNAME:${SOUNDS_CONFIG_FILE_DESTINATION_PATH}`,
-        );
-
-        /**
-         * Copy custom chime sound file to doorbell device
-         */
-        try {
-          console.log(
-            `${colors.green('✓')} Copying custom chime sound file ${colors.bold(soundFileName)} to doorbell device…`,
-          );
-
-          exec(
-            `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${soundFileSourcePath} ubnt@$G4_DOORBELL_HOSTNAME:${SOUND_FILE_DESTINATION_PATH}`,
-          );
-
-          /**
-           * Restart the /bin/ubnt_sounds_leds process
-           */
-          try {
-            console.log(`${colors.green('✓')} Restarting ${colors.bold(PROCESS_PATH)} process…`);
-
-            exec(
-              `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`,
-            );
-          } catch (error) {
-            console.error(
-              `${colors.red('✗')} An error occurred restarting the ${colors.bold(PROCESS_PATH)} process: ${error}`,
-            );
-          }
-        } catch (error) {
-          console.error(`${colors.red('✗')} An error occurred copying chime sound file: ${error}`);
-        }
-      } catch (error) {
-        console.error(`${colors.red('✗')} An error occurred copying sounds config file: ${error}`);
-      }
-    } catch (error) {
-      console.error(
-        `${colors.red('✗')} An error occurred writing sounds config file '${outputFileName}': ${error}`,
+  try {
+    if (!fs.existsSync(soundFileSourcePath)) {
+      throw new Error(
+        `The specified sound file ${colors.bold(soundFileSourcePath)} does not exist`,
       );
     }
-  } else {
-    console.error(
-      `${colors.red('✗')} The specified sound file ${colors.bold(soundFileSourcePath)} does not exist`,
+
+    fs.writeFileSync(outputFileName, formattedOutput, 'utf8');
+    logSuccess(`Wrote sounds config file to: ${colors.bold(outputFileName)}`);
+
+    /**
+     * Copy sounds config file to device
+     */
+    logSuccess(
+      `Copying sounds config file to ${colors.bold(SOUNDS_CONFIG_FILE_DESTINATION_PATH)}…`,
     );
+
+    const copyConfigCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputFileName} ubnt@$G4_DOORBELL_HOSTNAME:${SOUNDS_CONFIG_FILE_DESTINATION_PATH}`;
+
+    exec(copyConfigCommand);
+
+    /**
+     * Copy custom chime sound file to doorbell device
+     */
+    logSuccess(`Copying custom chime sound file ${colors.bold(soundFileName)} to doorbell device…`);
+
+    const copyChimeCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${soundFileSourcePath} ubnt@$G4_DOORBELL_HOSTNAME:${SOUND_FILE_DESTINATION_PATH}`;
+
+    exec(copyChimeCommand);
+
+    /**
+     * Restart the /bin/ubnt_sounds_leds process
+     */
+    logSuccess(`Restarting ${colors.bold(PROCESS_PATH)} process…`);
+
+    const restartProcessCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`;
+
+    exec(restartProcessCommand);
+  } catch (error) {
+    logError(`${error}`);
   }
 };
 

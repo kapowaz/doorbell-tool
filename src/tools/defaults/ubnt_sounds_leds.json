@@ -2,7 +2,7 @@
   "customSounds": [
     {
       "enable": true,
-      "file": "somefile.wav",
+      "file": "../../../../../../var/etc/sounds/Hollow_Knight_Shade.wav",
       "repeatTimes": 1,
       "soundStateName": "RING_BUTTON_PRESSED",
       "volume": 100
