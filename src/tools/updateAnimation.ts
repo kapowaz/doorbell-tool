@@ -20,6 +20,57 @@ const SLIDESHOW_FILE_DESTINATION_PATH = '/var/etc/persistent';
 const PROCESS_PATH = '/bin/ubnt_lcm_gui';
 const IMAGE_MOUNT_PATH = '/usr/etc/gui/screen_240x240';
 const CONFIG_MOUNT_PATH = '/usr/etc/gui/ubnt_lcm_gui_sysid_a575.json';
+const SCREEN_IMAGES: Record<ScreenName, string> = {
+  BE_RIGHT_THERE: 'Be_Right_There.png',
+  BLANK: 'Welcome.png',
+  CONNECTING_WIFI: 'AP_Glow_Loop_Anim_59.png',
+  DO_NOT_DISTURB: 'Do_Not_Disturb.png',
+  DOOR_LOCKED: 'Door_Locked_Anim_21.png',
+  DOOR_UNLOCKED: 'Door_Unlocked_Anim_29.png',
+  FACTORY_RESETTING: 'Rotating_Cogwheel_Anim_15.png',
+  FINGERPRINT_ERROR_BIG: 'Fingerprint_Error_Big.png',
+  FINGERPRINT_ERROR_MIDDLE: 'Fingerprint_Error_Middle.png',
+  FINGERPRINT_RECOGNIZED: 'Fingerprint_OK.png',
+  FINGERPRINT_SCAN_FINGER: 'Scan_Finger_Top_Part.png',
+  FINGERPRINT_SCANNING_FINGER: 'Scanning_Fingerprint_Anim_10.png',
+  INITIALIZING: 'Protect_Glow_Loop_Anim_19.png',
+  INSUFFICIENT_POWER: 'Power.png',
+  LEAVE_PACKAGE_AT_DOOR: 'Leave_Package_At_Door.png',
+  MESSAGE: 'Welcome.png',
+  NFC_ACCESS_GRANTED: 'NFC_BG_OK.png',
+  NFC_ACCESS_REJECTED: 'NFC_BG_Error.png',
+  NFC_CARD_NOT_SUPPORTED: 'NFC_BG_Error.png',
+  NFC_CARD_REJECTED: 'NFC_BG_Error.png',
+  NFC_CONFIRM_CARD: 'NFC_BG_OK.png',
+  NFC_CONFIRM_POCKET: 'NFC_BG_OK.png',
+  NFC_CONSOLE_OFFLINE: 'NFC_BG_OK.png',
+  NFC_PLACE_CARD: 'NFC_BG_OK.png',
+  NFC_POCKET_REJECTED: 'NFC_BG_Error.png',
+  NFC_REGISTER_ERROR: 'NFC_BG_Error.png',
+  NFC_REGISTERED_OTHER_SITE: 'NFC_BG_Error.png',
+  NFC_SCAN_CARD_AGAIN: 'NFC_BG_Error.png',
+  NO_CONNECTION_KNOCK: 'Info.png',
+  NO_WIFI_IN_RANGE: 'No_WiFi.png',
+  OFFLINE: 'Offline.png',
+  OPEN_MOBILE_APP: 'Protect_Logo.png',
+  PAIR_COMPLETE: 'Complete.png',
+  PAIR_FAILED: 'Pair_Failed.png',
+  PAIRING: 'Pairing_Anim_46.png',
+  POOR_WIFI_SIGNAL: 'Poor_WiFi_Anim_2.png',
+  RESET_HOLD: 'Reset_Pressed.png',
+  RESTARTING: 'Timelapse.png',
+  SETUP_COMPLETE: 'Complete.png',
+  SHUTTING_DOWN_COUNT: 'Power_Anim_2.png',
+  SHUTTING_DOWN: 'Power_Anim_2.png',
+  TALKING: 'Talking_Anim_48.png',
+  UNCONFIGURED: 'Unconfigured.png',
+  UPDATING_FIRMWARE: 'Rotating_Cogwheel_Anim_15.png',
+  UPDATING_MCU: 'Progress_Bar.png',
+  WAITING_FOR_RESPONSE: 'Ringing_Anim_48.png',
+  WELCOME_TEXT: 'Welcome.png',
+  WELCOME: 'Welcome_Anim_60.png',
+  WIFI_RECONFIGURE: 'No_WiFi.png',
+};
 
 const isScreenName = (name: string): name is ScreenName => {
   return SCREEN_NAME_TYPES.includes(name);
@@ -163,6 +214,7 @@ const updateAnimation = async () => {
     dry_run,
   } = argv;
   const animationSourcePath = `src/animations/${imageName}`;
+  const destinationImage = SCREEN_IMAGES[screenName as ScreenName];
   let outputImagePath = `${OUTPUT_PATH}/${imageName}`;
   let outputImageName = imageName;
   let animationFrames = frames;
@@ -288,37 +340,34 @@ const updateAnimation = async () => {
        */
       case isGIF:
         {
-          try {
-            const { pages, width, height } = await sharp(animationSourcePath).metadata();
-            outputImageName = `${path.basename(imageName, '.gif')}.png`;
-            outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
-            animationFrames = pages;
-            imageDimensions = { width, height };
+          const { pages, width, height } = await sharp(animationSourcePath).metadata();
+          outputImageName = `${path.basename(imageName, '.gif')}.png`;
+          outputImagePath = `${OUTPUT_PATH}/${outputImageName}`;
+          animationFrames = pages;
+          imageDimensions = { width, height };
 
-            const images: OverlayOptions[] = await Promise.all(
-              [...Array(pages)].map(async (_, index) => {
-                const inputBuffer = await sharp(animationSourcePath, {
-                  page: index,
-                }).toBuffer();
+          const images: OverlayOptions[] = await Promise.all(
+            [...Array(pages)].map(async (_, index) => {
+              const inputBuffer = await sharp(animationSourcePath, {
+                page: index,
+              }).toBuffer();
 
-                return {
-                  input: inputBuffer,
-                  left: index * width,
-                  top: 0,
-                };
-              }),
-            );
+              return {
+                input: inputBuffer,
+                left: index * width,
+                top: 0,
+              };
+            }),
+          );
 
-            await outputSlideshowImage({
-              images,
-              outputImage: outputImagePath,
-              width,
-              height,
-            });
-            logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
-          } catch (error) {
-            logError(`An error occurred attempting to parse GIF image: ${error}`);
-          }
+          await outputSlideshowImage({
+            images,
+            outputImage: outputImagePath,
+            width,
+            height,
+          });
+
+          logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
         }
         break;
 
@@ -383,10 +432,10 @@ const updateAnimation = async () => {
             // https://github.com/yargs/yargs/blob/main/docs/typescript.md#more-specific-typing-for-choices
             horizontal: horizontal as 'center' | 'left' | 'right',
             vertical: vertical as 'middle' | 'top' | 'bottom',
-            file: outputImageName,
+            file: destinationImage,
             animation: 'slideshow',
             duration: animationDuration,
-            count: frames,
+            count: animationFrames,
             animation_loop: loop,
           },
         ],
@@ -444,7 +493,7 @@ const updateAnimation = async () => {
     logSuccess(`Mounting custom slideshow image file in ${colors.bold(IMAGE_MOUNT_PATH)}…`);
 
     exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SLIDESHOW_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${outputImageName}'`,
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SLIDESHOW_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${destinationImage}'`,
     );
 
     /**
