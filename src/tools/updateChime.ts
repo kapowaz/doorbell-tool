@@ -9,7 +9,7 @@ import { logSuccess, logError } from './utils.ts';
 
 const SOUNDS_CONFIG_DEFAULTS = './src/tools/defaults/ubnt_sounds_leds.json';
 const OUTPUT_PATH = './build';
-const SOUND_FILE_DESTINATION_PATH = '/var/etc/sounds';
+const SOUND_FILE_DESTINATION_PATH = '/var/etc/persistent/sounds';
 const SOUNDS_CONFIG_FILE_DESTINATION_PATH = '/var/etc/persistent/ubnt_sounds_leds.conf';
 const PROCESS_PATH = '/bin/ubnt_sounds_leds';
 
@@ -75,27 +75,27 @@ const updateChime = async () => {
       `Copying sounds config file to ${colors.bold(SOUNDS_CONFIG_FILE_DESTINATION_PATH)}…`,
     );
 
-    exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputFileName} ubnt@$G4_DOORBELL_HOSTNAME:${SOUNDS_CONFIG_FILE_DESTINATION_PATH}`,
-    );
+    const copyConfigCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputFileName} ubnt@$G4_DOORBELL_HOSTNAME:${SOUNDS_CONFIG_FILE_DESTINATION_PATH}`;
+
+    exec(copyConfigCommand);
 
     /**
      * Copy custom chime sound file to doorbell device
      */
     logSuccess(`Copying custom chime sound file ${colors.bold(soundFileName)} to doorbell device…`);
 
-    exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${soundFileSourcePath} ubnt@$G4_DOORBELL_HOSTNAME:${SOUND_FILE_DESTINATION_PATH}`,
-    );
+    const copyChimeCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${soundFileSourcePath} ubnt@$G4_DOORBELL_HOSTNAME:${SOUND_FILE_DESTINATION_PATH}`;
+
+    exec(copyChimeCommand);
 
     /**
      * Restart the /bin/ubnt_sounds_leds process
      */
     logSuccess(`Restarting ${colors.bold(PROCESS_PATH)} process…`);
 
-    exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`,
-    );
+    const restartProcessCommand = `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'killall ${PROCESS_PATH}'`;
+
+    exec(restartProcessCommand);
   } catch (error) {
     logError(`${error}`);
   }

@@ -11,3 +11,7 @@ export const logWarning = (warnMessage: string) => {
 export const logSuccess = (successMessage: string) => {
   console.log(`${colors.green('✓')} ${successMessage}`);
 };
+
+export const logDebug = (debugMessage: string) => {
+  console.debug(`${colors.grey('🛈')} ${colors.grey(debugMessage)}`);
+};
