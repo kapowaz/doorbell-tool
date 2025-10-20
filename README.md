@@ -83,7 +83,7 @@ displayed on the doorbell for specific events. The full list can be found in
 doorbell, and when they push the ringer. respectively.
 
 The tool can accept a variety of different ways to create an animation.
-Internally the doorbell uses a ‘slideshow’ format where each frame is laid out
+Internally the doorbell uses a spritesheet format where each frame is laid out
 horizontally across a single PNG image, and animates this by showing a different
 slice of the image according to the animation duration. The tool can accept an
 image created in this format if you’d prefer, but you can also provide it a GIF
@@ -127,9 +127,9 @@ $ yarn animation --screen WELCOME --image ShadeAppear.gif --framerate 20
 $ yarn animation --screen WELCOME --image ShadeAppear.png --framerate 20 --frames 20
 ```
 
-(This is the exact same animation, only as an image sequence, GIF, or slideshow
-image respectively. Note how the last one requires you to explicitly state the
-number of frames).
+(This is the exact same animation, only as an image sequence, GIF, or
+spritesheet image respectively. Note how the last one requires you to explicitly
+state the number of frames).
 
 _To set the ‘ringing’ screen to the Shade from Hollow Knight floating there, all
 spooky, do any of:_
