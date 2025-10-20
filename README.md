@@ -66,8 +66,8 @@ anything else, but it’s possible `.mp3` is supported too).
 You can also supply arguments for `--volume` and `--repeat` to change the volume
 (!) and how many times the chime should play after the buzzer is pressed. Note:
 this is not the same as the sound played by e.g. a connected PoE Chime (if you
-have one); at the point I’m writing this, _that_ chime sound can only be set
-using the UniFi Protect app from the preinstalled list of chimes :(
+have one); you can customise this by uploading a custom `.wav` or `.mp3` file
+from the UniFi Protect app.
 
 _To update the animations displayed on the doorbell screen for specific key
 events, run:_
