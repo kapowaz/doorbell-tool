@@ -3,11 +3,27 @@
 A set of scripts for customising your UniFi Doorbell G4 Pro. You can:
 
 - Customise the chime played through the doorbell when somebody pushes the button
-- Customise the screen animations displayed for key events
+- Customise the screen animations displayed for key events such as when somebody
+  walks up to the doorbell, or when they press the ringer.
 
 As well as copying/configuring the animations, the script can also generate
 animations for you in the correct spritesheet format from an image sequence or
 GIF.
+
+## I can already do this from the UniFi Protect app. Why do I need this tool?
+
+If you’re happy enough with uploading GIFs directly to the Protect app, it’s
+possible you don’t need this tool. However, there’s a few key advantages of this
+tool:
+
+- Since the settings on the doorbell seem to periodically reset (when there’s a
+  power loss event, for example), you could hook this tool up to a cron job to
+  ensure it gets run periodically
+- GIF is a convenient format, but it’s lossy (doesn’t have the best image
+  quality); PNG spritesheets can use 24-bit colour and opacity, with full colour
+- At present you can only set the `WELCOME` screen animation via the Protect
+  app, whereas you can set any number of other events, like
+  `WAITING_FOR_RESPONSE`, which is shown after the doorbell is pressed.
 
 ## Requirements
 
