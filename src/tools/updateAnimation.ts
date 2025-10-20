@@ -16,7 +16,7 @@ const ACCEPTABLE_FRAME_IMAGE_FORMATS = ['png', 'jpeg', 'jpg', 'tiff', 'tif', 'we
 const OUTPUT_PATH = './build';
 const OUTPUT_CONFIG_PATH = `${OUTPUT_PATH}/ubnt_lcm_gui.json`;
 const CONFIG_DESTINATION_PATH = '/var/etc/persistent/ubnt_lcm_gui.json';
-const SLIDESHOW_FILE_DESTINATION_PATH = '/var/etc/persistent';
+const SPRITESHEET_FILE_DESTINATION_PATH = '/var/etc/persistent';
 const PROCESS_PATH = '/bin/ubnt_lcm_gui';
 const IMAGE_MOUNT_PATH = '/usr/etc/gui/screen_240x240';
 const CONFIG_MOUNT_PATH = '/usr/etc/gui/ubnt_lcm_gui_sysid_a575.json';
@@ -101,7 +101,7 @@ const parser = yargs(process.argv.slice(2))
     frames: {
       type: 'number',
       describe:
-        'Number of frames in the animation, if creating a slideshow with a single spritesheet image',
+        'Number of frames in the animation, if creating a spritesheet with a single spritesheet image',
     },
     framerate: {
       type: 'number',
@@ -113,10 +113,10 @@ const parser = yargs(process.argv.slice(2))
       default: true,
       describe: 'Should the animation loop?',
     },
-    slideshow: {
+    spritesheet: {
       type: 'boolean',
       default: true,
-      describe: 'Should the animation be a slideshow or a static image?',
+      describe: 'Should the animation be a spritesheet or a static image?',
     },
     x: {
       type: 'number',
@@ -165,7 +165,7 @@ const hasAcceptedFileExtension = (imagePath: string): boolean => {
   return ACCEPTABLE_FRAME_IMAGE_FORMATS.includes(extension);
 };
 
-const outputSlideshowImage = async ({
+const outputSpritesheet = async ({
   images,
   width,
   height,
@@ -206,7 +206,7 @@ const updateAnimation = async () => {
     frames,
     framerate,
     loop,
-    slideshow,
+    spritesheet,
     x,
     y,
     horizontal,
@@ -237,7 +237,7 @@ const updateAnimation = async () => {
 
     const isDirectory = fs.lstatSync(animationSourcePath).isDirectory();
     const isGIF = path.extname(imageName) === '.gif';
-    const isStaticImage = hasAcceptedFileExtension(animationSourcePath) && !slideshow;
+    const isStaticImage = hasAcceptedFileExtension(animationSourcePath) && !spritesheet;
 
     switch (true) {
       /**
@@ -326,12 +326,12 @@ const updateAnimation = async () => {
           animationFrames = filteredImages.length;
 
           // composite all the images into a single image, and export as a PNG
-          await outputSlideshowImage({
+          await outputSpritesheet({
             images,
             outputImage: outputImagePath,
             ...imageDimensions,
           });
-          logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
+          logSuccess(`Wrote spritesheet image file to ${colors.bold(outputImagePath)}`);
         }
         break;
 
@@ -360,14 +360,14 @@ const updateAnimation = async () => {
             }),
           );
 
-          await outputSlideshowImage({
+          await outputSpritesheet({
             images,
             outputImage: outputImagePath,
             width,
             height,
           });
 
-          logSuccess(`Wrote slideshow image file to ${colors.bold(outputImagePath)}`);
+          logSuccess(`Wrote spritesheet image file to ${colors.bold(outputImagePath)}`);
         }
         break;
 
@@ -388,15 +388,15 @@ const updateAnimation = async () => {
         break;
 
       /**
-       * A single image slideshow requires a frames argument. We _could_ just
+       * A single image spritesheet requires a frames argument. We _could_ just
        * fall back to a multiple of 240, but this doesn’t work for smaller
-       * slideshow image dimensions
+       * spritesheet image dimensions
        */
       case hasAcceptedFileExtension(animationSourcePath):
         {
           if (!Boolean(frames)) {
             throw new Error(
-              `if you’re creating a slideshow from a single image, you must provide a frames argument`,
+              `if you’re creating a spritesheet from a single image, you must provide a frames argument`,
             );
           }
 
@@ -477,23 +477,23 @@ const updateAnimation = async () => {
     );
 
     /**
-     * Copy custom slideshow image file to device
+     * Copy custom spritesheet image file to device
      */
     logSuccess(
-      `Copying custom slideshow image file to ${colors.bold(SLIDESHOW_FILE_DESTINATION_PATH)}…`,
+      `Copying custom spritesheet image file to ${colors.bold(SPRITESHEET_FILE_DESTINATION_PATH)}…`,
     );
 
     exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputImagePath} ubnt@$G4_DOORBELL_HOSTNAME:${SLIDESHOW_FILE_DESTINATION_PATH}`,
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD scp -O ${outputImagePath} ubnt@$G4_DOORBELL_HOSTNAME:${SPRITESHEET_FILE_DESTINATION_PATH}`,
     );
 
     /**
      * Mount the custom image in the target directory
      */
-    logSuccess(`Mounting custom slideshow image file in ${colors.bold(IMAGE_MOUNT_PATH)}…`);
+    logSuccess(`Mounting custom spritesheet image file in ${colors.bold(IMAGE_MOUNT_PATH)}…`);
 
     exec(
-      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SLIDESHOW_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${destinationImage}'`,
+      `sshpass -p $G4_DOORBELL_SSH_PASSWORD ssh ubnt@$G4_DOORBELL_HOSTNAME -f 'mount -o bind ${SPRITESHEET_FILE_DESTINATION_PATH}/${outputImageName} ${IMAGE_MOUNT_PATH}/${destinationImage}'`,
     );
 
     /**

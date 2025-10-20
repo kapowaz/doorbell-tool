@@ -3,11 +3,27 @@
 A set of scripts for customising your UniFi Doorbell G4 Pro. You can:
 
 - Customise the chime played through the doorbell when somebody pushes the button
-- Customise the screen animations displayed for key events
+- Customise the screen animations displayed for key events such as when somebody
+  walks up to the doorbell, or when they press the ringer.
 
 As well as copying/configuring the animations, the script can also generate
 animations for you in the correct spritesheet format from an image sequence or
 GIF.
+
+## I can already do this from the UniFi Protect app. Why do I need this tool?
+
+If you’re happy enough with uploading GIFs directly to the Protect app, it’s
+possible you don’t need this tool. However, there’s a few key advantages of this
+tool:
+
+- Since the settings on the doorbell seem to periodically reset (when there’s a
+  power loss event, for example), you could hook this tool up to a cron job to
+  ensure it gets run periodically
+- GIF is a convenient format, but it’s lossy (doesn’t have the best image
+  quality); PNG spritesheets can use 24-bit colour and opacity, with full colour
+- At present you can only set the `WELCOME` screen animation via the Protect
+  app, whereas you can set any number of other events, like
+  `WAITING_FOR_RESPONSE`, which is shown after the doorbell is pressed.
 
 ## Requirements
 
@@ -67,7 +83,7 @@ displayed on the doorbell for specific events. The full list can be found in
 doorbell, and when they push the ringer. respectively.
 
 The tool can accept a variety of different ways to create an animation.
-Internally the doorbell uses a ‘slideshow’ format where each frame is laid out
+Internally the doorbell uses a spritesheet format where each frame is laid out
 horizontally across a single PNG image, and animates this by showing a different
 slice of the image according to the animation duration. The tool can accept an
 image created in this format if you’d prefer, but you can also provide it a GIF
@@ -111,9 +127,9 @@ $ yarn animation --screen WELCOME --image ShadeAppear.gif --framerate 20
 $ yarn animation --screen WELCOME --image ShadeAppear.png --framerate 20 --frames 20
 ```
 
-(This is the exact same animation, only as an image sequence, GIF, or slideshow
-image respectively. Note how the last one requires you to explicitly state the
-number of frames).
+(This is the exact same animation, only as an image sequence, GIF, or
+spritesheet image respectively. Note how the last one requires you to explicitly
+state the number of frames).
 
 _To set the ‘ringing’ screen to the Shade from Hollow Knight floating there, all
 spooky, do any of:_
